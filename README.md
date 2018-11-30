@@ -1,44 +1,74 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### 初始：
+  - state 数据
+  - JSX 模板
+  - 数据 和 模板 相结合生成真实的Dom， 来显示
+  - state 发生改变
+  - 数据 + 模板 结合 生成真实的dom 显示
+### 缺陷：
+  第一次 生成一个完整的DOM
+  第二次 生成一个完成DOM
+  第二次 的DOM 替换 第一次的 Dom 非常损耗性能
 
-## Available Scripts
+### 第二版
+1. state 数据
+2. jsx 模板
+3. 数据 + 模板 结合 生成真实DOM 显示
+4. state 发生改变
+5. 数据 + 模板 结合 生成真实DOM 并不直接替换原始的DOM
+6. 新DOM 和 原始Dom 做对比 找差异
+7. 找出input框发生了变化
+8. 只用新DOM中的input元素，替换掉老的Dom中的input元素
 
-In the project directory, you can run:
+缺陷：
+1. 性能提升并不明显
 
-### `npm start`
+### 第三版
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+1. state
+2. jsx
+3. 数据 + 模板 生成真实DOM 显示
+```html
+<div id="abc"><span>hello world</span></div>
+```
+4. 生成虚拟DOM (虚拟DOM就是一个js对象，用它来描述真实DOM)
+```javascript
+['div', {id: 'abc'}, ['span', {}, 'hello world']]
+```
+3. 数据 + 模板 生成真实DOM 显示
+5. state 变化
+6. 生成新的虚拟dom
+```javascript
+['div', {id: 'abc'}, ['span', {}, 'bye bye']]
+```
+7. 比较原始虚拟DOM和新的虚拟DOM的区别，找到区别是span中的内容
+8. 直接操作DOM,
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+**实际是上是先生成虚拟DOM**
 
-### `npm test`
+优点：
+  1. dom比对边js对象比对
+  2. 跨端应用
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+#### Diff算法 介绍
+自顶向下逐层比较
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
+### 生命周期：
+  生命周期函数是指在某一时刻组件会自动调用执行的函数
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+![生命周期](https://ws1.sinaimg.cn/large/9e58a4edly1fxp2odeutmj21460kdwm1.jpg)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+---
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## redux
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+![why](https://ws1.sinaimg.cn/large/9e58a4edly1fxq6hwqg3ej20ww0ic768.jpg)
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+
