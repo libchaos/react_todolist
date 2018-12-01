@@ -69,6 +69,9 @@
 
 
 
+![redux图解](https://ws1.sinaimg.cn/large/9e58a4edgy1fxr0rwykuxj21320k640t.jpg)
+
+
 
 
 
