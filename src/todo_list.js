@@ -1,23 +1,27 @@
 import React, {Component} from 'react'
-import {Input, Button, List} from 'antd'
-import 'antd/dist/antd.css'
+import TodoListUI from './todoListUI'
 import store from './store'
+import * as actionTypes from './store/actionTypes'
+import * as actionCreators from './store/actionCreators'
+import axios from 'axios'
 
 
 class TodoList extends Component {
   constructor(props) {
     super(props)
     this.state = store.getState()
-    this.handleInput = this.handleInput.bind(this)
+    this.handleInputChange = this.handleInputChange.bind(this)
     this.handleStoreChange = this.handleStoreChange.bind(this)
     this.handleBtnClick = this.handleBtnClick.bind(this)
+    this.handleItemClick = this.handleItemClick.bind(this)
     store.subscribe(this.handleStoreChange)
   }
-  handleInput(e) {
-    const action = {
-      type: 'change_input_value',
-      value: e.target.value
-    }
+  handleInputChange(e) {
+    // const action = {
+    //   type: actionTypes.CHANGE_INPUT_VALUE,
+    //   value: e.target.value
+    // }
+    const action = actionCreators.getInputChangeAction(e.target.value)
     store.dispatch(action)
   }
 
@@ -26,38 +30,37 @@ class TodoList extends Component {
   }
 
   handleBtnClick() {
-    const action = {
-      type: 'add_todo_item',
-    }
+    // const action = {
+    //   type: actionTypes.ADD_TODO_ITEM,
+    // }
+    const action = actionCreators.getAddItemAction()
     store.dispatch(action)
   }
 
   handleItemClick(index) {
-    const action = {
-      type: 'delete_item',
-      index
-    }
+    // const action = {
+    //   type: actionTypes.DELETE_ITEM,
+    //   index
+    // }
+    const action = actionCreators.getDeleteItemAction(index)
     store.dispatch(action)
   }
 
   render() {
-    return (
-      <div style={{marginTop: '10px', marginBottom: '10px'}}>
-        <div>
-          <Input placeholder="todo" style={{width: '400px', marginRight: '10px'}} value={this.state.inputValue}
-            onChange={this.handleInput}
-          />
-          <Button type="primary" onClick={this.handleBtnClick}>submit</Button>
-        </div>
-        <List
-          style={{marginTop: '10px', width: '400px'}}
-          bordered
-          dataSource={this.state.list}
-          renderItem={(item, index) => (<List.Item onClick={this.handleItemClick.bind(this, index)}>{item}</List.Item>)}
-        />
-      </div>
-    )
+    return (<TodoListUI
+      inputValue={this.state.inputValue}
+      list={this.state.list}
+      handleInputChange={this.handleInputChange}
+      handleBtnClick={this.handleBtnClick}
+      handleItemClick={this.handleItemClick}
+    />)
   }
+
+  componentDidMount () {
+    const action = actionCreators.getTodoLIST()
+    store.dispatch(action)
+  }
+
 }
 
 export default TodoList
