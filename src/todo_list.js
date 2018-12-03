@@ -57,7 +57,18 @@ class TodoList extends Component {
   }
 
   componentDidMount () {
-    const action = actionCreators.getTodoLIST()
+    // const action = actionCreators.getTodoLIST()
+    // store.dispatch(action)
+
+      // axios
+      //   .get('/api/todolist')
+      //   .then((res) => {
+      //     const data = res.data
+      //     const action = actionCreators.initListAction(data)
+      //     store.dispatch(action)
+      //   })
+      //   .catch((err) => console.log(err))
+    const action = actionCreators.getInitList()
     store.dispatch(action)
   }
 

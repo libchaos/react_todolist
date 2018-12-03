@@ -20,17 +20,20 @@ export const initListAction = (data) => ({
   data,
 })
 
+export const getInitList = () => ({
+  type: actionTypes.GET_INIT_LIST
+})
 
-export const getTodoLIST = () => {
-  return (dispatch) => {
-    axios
-      .get('/api/todolist')
-      .then((res) => {
-        // console.log(res.data)
-        const data = res.data;
-        const action = initListAction(data)
-        dispatch(action)
-      })
-      .catch((err) => console.log(err))
-  }
-}
+// export const getTodoLIST = () => {
+//   return (dispatch) => {
+//     axios
+//       .get('/api/todolist')
+//       .then((res) => {
+//         // console.log(res.data)
+//         const data = res.data;
+//         const action = initListAction(data)
+//         dispatch(action)
+//       })
+//       .catch((err) => console.log(err))
+//   }
+// }
